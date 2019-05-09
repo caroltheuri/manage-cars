@@ -15,7 +15,8 @@
     </nav>
     <main class ="container">
         
-        <?php echo anchor("cars/add_car", "Add New Car"); ?>
+        <?php echo anchor("cars/add_car", "Add New Car",array("class" => "btn btn-primary")); ?>
+        <?php echo anchor("cars/sortColor", "Sort by Blue Car", array("class" => "btn btn-success")); ?>
         <table class="table table-striped table-bordered table-sm">
             <tr>
                 <th scope="col">#</th>
@@ -56,7 +57,7 @@
                         <td><?php echo $availability ?></td>
                         <td><?php echo $date_created ?></td>
                         <td><?php echo $date_updated ?></td>
-                        <td><a href="" class="btn btn-primary">Edit</a></td>
+                        <td><?php echo anchor("cars/update_car/".$id, "Edit",array("class" => "btn btn-primary")); ?></td>
                         <?php if($availability == 1){?>
                             <td><a href="" class="btn btn-warning" width="5%">De-Activate</a></td>
                         <?php }

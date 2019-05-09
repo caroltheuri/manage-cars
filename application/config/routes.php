@@ -53,8 +53,3 @@ $route['default_controller'] = 'cars';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-
-$route['cars/all-friends'] = 'friends/test/index';
-$route['friends/all-friends/(:any)/(:any)/(:num)'] = 'friends/test/index/$1/$2/$3';
-$route['friends/all-friends/(:any)/(:any)'] = 'friends/test/index/$1/$2';
-$route['friends/all-friends/(:num)'] = 'friends/test/index/$1';

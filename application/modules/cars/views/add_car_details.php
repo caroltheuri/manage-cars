@@ -17,6 +17,7 @@
                 echo $validation_errors;
             }
         ?>
+        <?php echo anchor("cars/index", "Go Home",array("class" => "btn btn-warning")); ?>
         <?php echo form_open_multipart($this->uri->uri_string()); ?>
             <div class="form-group">
             <label for ="car_make">Car Make</label>

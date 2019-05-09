@@ -3,50 +3,58 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>Update Car</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel ="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/themes/custom/style.css">
-    <link href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.min.css "rel="stylesheet">
+    <link href="<?php echo base_url();?>assets/vendor/bootstrap/css/bootstrap.min.css "rel="stylesheet">
     <script src="main.js"></script>
 </head>
 <body>
-    <div class="container">
     <div class = "container">
         <?php
-
-$validation_errors = validation_errors();
-if (!empty($validation_errors)) {
-    echo $validation_errors;
-}
-?>
-        <!-- dynamically generating a form in brackets where to submit data to-->
-    <?php echo form_open($this->uri->uri_string());?>
-
-   <div class="form-group">
-       <label for ="first_name">First Name</label>
-       <input type="text" name="firstname" class="form-control" value = "<?php echo $friend_name; ?>">
+            $validation_errors = validation_errors();
+            if (!empty($validation_errors)) {
+                echo $validation_errors;
+            }
+        ?>
+         <?php echo anchor("cars/index", "Go Home",array("class" => "btn btn-warning")); ?>
+        <?php echo form_open_multipart($this->uri->uri_string()); ?>
+            <div class="form-group">
+            <label for ="car_make">Car Make</label>
+            <input type="text" name="carmake" class="form-control" value="<?php echo $car_make ?>">
+            </div>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" name="color" class="form-control" value="<?php echo $color ?>"/>
+            </div>
+            <div>
+                <label for="registration_number">Registration Number</label>
+                <input type="text" name="registrationnumber" class="form-control" value="<?php echo $registration_number ?>"/>
+            </div>
+            <div class="form-group">
+            <label for="year">Year of Manufuctring</label>
+            <input type="number" name="year" class="form-control" value="<?php echo $year_of_manufuctring ?>">
+            </div>
+            <div class="form-group">
+            <label for="car_type">Car Type</label>
+            <input type="text" name="cartype" class="form-control" value="<?php echo $car_type ?>">
+            </div>
+            <div class="form-group mb-3">
+            <select class="custom-select form-control" name="availability" value="<?php echo $availability ?>">
+                <option selected>Choose...</option>
+                <option value="1">Available</option>
+                <option value="0">Not Available</option>
+            </select>
+            </div>
+            <div class="submit_button">
+                <input type ="submit" class="btn btn-primary" value="Update Car Details"/>
+            </div>
+        <?php echo form_close() ?>
     </div>
-    <div class="form-group">
-        <label for="age">Age</label>
-        <input type="number" name="age" class="form-control" value = "<?php echo $friend_age; ?>"/>
-    </div>
-     <div>
-       <label for="gender">Gender</label>
-        <input type="radio" name="gender" value="<?php echo $friend_gender; ?>"/>Male
-        <input type="radio" name="gender" value="<?php echo $friend_gender; ?>"/>Female
-
-    </div>
-    <div class="form-group">
-       <label for="hobby" >Hobby</label>
-       <input type="text" name="hobby" class="form-control" value = "<?php echo $friend_hobby; ?>">
-    </div>
-       <div class="submit_button">
-           <input type ="submit"value="Update Friend"/>
-
-       </div>
-
-
-   <?php echo form_close() ?>
-    </div>
+    <script src="<?php echo base_url() ?>assets/vendor/jquery/jquery-3.3.1.slim.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/themes/custom/feather.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/themes/custom/script.js"></script>
 </body>
 </html>

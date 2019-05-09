@@ -7,10 +7,17 @@ class Cars extends MX_Controller
         $this->load->model("cars_model");
     }
 
+    //Function that displays all records
     public function index()
     {
         $v_data["car_details"] = $this->cars_model->get_cars();
         $this->load->view("all_cars",$v_data);
+    }
+
+    //Function that sorts by Blue color
+    public function sortColor(){
+        $v_data= $this->cars_model->sort_by_color();
+        redirect("cars/index");
     }
 
     //Function for adding a new entry
@@ -36,26 +43,46 @@ class Cars extends MX_Controller
         $data["form_error"] = validation_errors();
         $this->load->view("add_car_details", $data);
     }
-    // edit button
-    // public function edited_friend ()
-    // {
-    //     $this->form_validation->set_rules ("firstname","First Name","trim|required");
-    //     $this->form_validation->set_rules ("age","Age","trim|required|numeric");
-    //     $this->form_validation->set_rules ("gender","Gender","trim|required");
-    //     $this->form_validation->set_rules ("hobby","Hobby","trim|required");
+    // Function for editing car details
+     public function update_car($car_id)
+    {
+        $this->form_validation->set_rules("carmake", "Car Make", "required");
+        $this->form_validation->set_rules("color", "Color", "required");
+        $this->form_validation->set_rules("registrationnumber", "Registration Number", "required");
+        $this->form_validation->set_rules("year", "Year", "required");
+        $this->form_validation->set_rules("cartype", "Car Type", "required");
+        $this->form_validation->set_rules("availability", "Availability", "required");
 
-    //     if ($this->form_validation->run() == FALSE)
-    //     {
-    //         echo "failed to edit friend";
-    //     }
-    //     else
-    //     {
-    //         $friend_id = $this->input->post("friend_id");
-    //         $this->friends_model->edit_friend($friend_id);
-    //         $this->session->set_flashdata("success_message","Friend ID ".$friend_id." has been edited");
-    //     }
+        if ($this->form_validation->run()) {
+            $update_details = $this->cars_model->update_car($car_id);
+            
+            redirect("cars/index");
+        }
+        $single_car = $this->cars_model->single_car($car_id);
+        if ($single_car->num_rows() > 0) {
+            $row = $single_car->row();
+            $id = $row->car_id;
+            $car_make = $row->car_make;
+            $color = $row->color;
+            $registration_number = $row->registration_number;
+            $year_of_manufuctring = $row->year_of_manufuctring;
+            $car_type = $row->car_type;
+            $availability = $row->availability;
+        }
+        $v_data = array(
+            "id" => $id ,
+            "car_make" => $car_make, 
+            "color" => $color,
+            "registration_number" => $registration_number,
+            "year_of_manufuctring" => $year_of_manufuctring,
+            "car_type" => $car_type,
+            "availability" => $availability
+        );
 
-    // }
+        $data["form_error"] = validation_errors();
+        $this->load->view("edit_cardetails", $v_data);
+
+    }
 
     
 
@@ -66,11 +93,6 @@ class Cars extends MX_Controller
         $deleted_car = $this->cars_model->delete_car($car_id);
         //2. Return all cars where the value delete column is 0; meaning, they are not deleted
         redirect("cars/index");
-        // $v_data["all_friends"] = $undeleted;
-        // // var_dump($v_data);
-        // //3. load the all friends view with data from step 2
-        
-        // $this->load->view("site/layouts/layout", $data);
     }
 
 }

@@ -34,34 +34,31 @@ class Cars_model extends CI_Model
         return $this->db->get();
     }
 
-    public function update_friend($friend_id)
+    //Function that updates car entries
+    public function update_car($car_id)
     {
         $data = array(
-//how its in db..............how its in form
-            "friend_name" => $this->input->post("firstname"),
-            "friend_age" => $this->input->post("age"),
-            "friend_gender" => $this->input->post("gender"),
-            "friend_hobby" => $this->input->post("hobby"),
+            "car_make" => $this->input->post("carmake"),
+            "color" => $this->input->post("color"),
+            "registration_number" => $this->input->post("registrationnumber"),
+            "year_of_manufuctring" => $this->input->post("year"),
+            "car_type" => $this->input->post("cartype"),
+            "availability" => $this->input->post("availability"),
+            "date_updated" => date('Y-m-d H:i:s'),
+
         );
-
         $this->db->set($data);
-        $this->db->where('friend_id', $friend_id);
-        if ($this->db->update('friend')) {
-            $this->session->set_flashdata("success","successfuly updated");
-        
+        $this->db->where('car_id', $car_id);
+        $this->db->update('car_details');
+    }   
 
-            return true;
-        } else {
-            $this->session->set_flashdata("error","failed to update");
+    //Function that gets details of a single car
 
-            return false;
-        }
-
-//var_dump($data);die();
+    public function single_car($car_id)
+    {
+        $this->db->where('car_id', $car_id);
+        return $this->db->get('car_details');
     }
-    //end of edit button
-
-    
     
     //Function for deleting a car entry
     public function delete_car($car_id)
@@ -69,5 +66,12 @@ class Cars_model extends CI_Model
         $this->db->where("car_id", $car_id);
         $this->db->set("deleted",0);
         $this->db->update("car_details");
-    }   
+    }  
+    
+    //Function that returns cars whose colour is blue alone
+    public function sort_by_color()
+    {
+        $this->db->where("color", "Blue");
+        $this->db->get("car_details");
+    }  
 }
