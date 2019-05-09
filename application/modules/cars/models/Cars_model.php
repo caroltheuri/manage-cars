@@ -1,21 +1,22 @@
 <?php
-class Friends_model extends CI_Model
+class Cars_model extends CI_Model
 {
-    function add_friend($upload_response)
+    //Function that saves entries to the database in the car_details table.
+    function add_car()
     {
         $data = array(
-            "friend_name" => $this->input->post("firstname"),
-            "friend_age" => $this->input->post("age"),
-            "friend_gender" => $this->input->post("gender"),
-            "friend_hobby" => $this->input->post("hobby"),
-            "friend_image" => $upload_response["file_name"],
-            "friend_thumb" => $upload_response["thumb_name"],
+            "car_make" => $this->input->post("carmake"),
+            "color" => $this->input->post("color"),
+            "registration_number" => $this->input->post("registrationnumber"),
+            "year_of_manufuctring" => $this->input->post("year"),
+            "car_type" => $this->input->post("cartype"),
+            "availability" => $this->input->post("availability"),
+            "date_created" => date('Y-m-d H:i:s'),
+            "deleted" => "1"
 
         );
-        // var_dump($upload_response["file_name"]);die();
-
-        if ($this->db->insert("friend", $data)) {
-            $this->session->set_flashdata("success", "New friend has been added");
+        if ($this->db->insert("car_details", $data)) {
+            $this->session->set_flashdata("success", "New Car has been added");
             return $this->db->insert_id();
         } else {
             $this->session->set_flashdata("error", "New friend cannot be added");
@@ -24,11 +25,11 @@ class Friends_model extends CI_Model
 
     }
 
-    public function get_friends($per_page,$page)
+    public function get_cars()
     {
-        $this->db->from("friend");
+        $this->db->from("car_details");
         $this->db->order_by("created", "DESC");
-        return $this->db->get("",$per_page,$page);
+        return $this->db->get();
     }
 
     public function get_all_friends($table, $where, $per_page, $page, $order, $order_method)
@@ -115,16 +116,10 @@ class Friends_model extends CI_Model
     }
     //end of edit button
 
-    public function friends_not_deleted(){
-        $this->db->where("delete",0);
-        $query = $this->db->get('friend');
-        return $query;
-
-    }
     
-    //function for deleting and returning friends that have not been deleted
-
-    public function remove_friend($friend_id)
+    
+    //Function for deleting a car entry
+    public function delete_car($car_id)
     {
         $this->db->where("friend_id", $friend_id);
         $this->db->set("delete",1);
@@ -139,25 +134,5 @@ class Friends_model extends CI_Model
 
             return false;
         }
-    }
-
-    //function for searching 
-    public function search_friend()
-    {
-        $keyword = $this->input->post("search");
-        $this->db->like("friend_name",$keyword);
-        $query=$this->db->get('friend');
-
-        if($query->num_rows() > 0){
-            $this->session->set_flashdata("success", "Search results found");
-            
-        }
-        else{
-            $this->session->set_flashdata("error", "No results found");
-            
-        }
-        return $query;
-        
-    }
-
+    }   
 }

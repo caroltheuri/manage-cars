@@ -4,12 +4,13 @@ class Cars extends MX_Controller
     public function __construct()
     {
         parent::__construct();
-        //$this->load->model("friends_model");
+        $this->load->model("cars_model");
     }
 
     public function index()
     {
-        $this->load->view("all_cars");
+        $car_details = $this->cars_model->get_cars();
+        $this->load->view("all_cars",$car_details);
     }
 
     public function welcome($friend_id)
@@ -68,7 +69,11 @@ class Cars extends MX_Controller
         }
     }
 
-//add friend
+    //Function for adding a new entry
+    /**
+     * If an entry is successful an success alert will be shown and the viceversa if it fails to save successfully
+     * Whether successful or not it will redirect to the landing page, but if there is a problem with the input you will be redirected to the same page
+     */
     public function add_car()
     {
 
@@ -80,20 +85,15 @@ class Cars extends MX_Controller
         $this->form_validation->set_rules("availability", "Availability", "required");
 
         if ($this->form_validation->run()) {
-            
+            $save_details = $this->cars_model->add_car();
+            $this->load->view("all_cars", $save_details);
         }
+        else{
+            $data["form_error"] = validation_errors();
 
-        $data["form_error"] = validation_errors();
+            $this->load->view("add_car_details", $data);
 
-        $this->load->view("add_car_details", $data);
-
-        // $v_data["add_friend"] = "friends/Friends_model";
-        // $data = array("title" => $this->site_model->display_page_title(),
-        //     "content" => $this->load->view("friends/add_friend", $v_data, true),
-
-        // );
-        // $this->load->view("site/layouts/layout", $data);
-
+        }
     }
 
     

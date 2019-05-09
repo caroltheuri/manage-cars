@@ -30,6 +30,14 @@
                 <th scope="col">Edit</th>
                 <th scope="col">Delete</th>
             </tr>
+            <tr>
+            <?php 
+                foreach($car_details->num_rows() as $one_car){ ?>
+                    <td>$one_car-></td>
+                <?php }
+                
+            ?>
+            </tr>
         </table>
       
     </main>
