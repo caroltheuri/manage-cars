@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'nanyukiappfactory-mysqldbserver.mysql.database.azure.com',
-	'username' => 'grace@nanyukiappfactory-mysqldbserver',
-	'password' => '@grace12',
-	'database' => 'gracepdb',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'ecommerce',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -1,83 +1,15 @@
 <?php
-class Friends extends MX_Controller
+class Cars extends MX_Controller
 {
-    public $upload_path;
-    public $upload_location;
-
     public function __construct()
     {
         parent::__construct();
-        $this->upload_path = realpath(APPPATH. "../assets/uploads");
-        $this->upload_location = base_url()."assets/uploads";
-        $this->load->library("image_lib");
-        $this->load->model("friends_model");
-        $this->load->model("site/site_model");
-        $this->load->model("site/file_model");
+        //$this->load->model("friends_model");
     }
 
     public function index()
     {
-
-        // $this->form_validation->set_rules("search", "Search", "required");
-        // if ($this->form_validation->run()) {
-        //     $friend_id["searched_friends"] = $this->friends_model->search_friend();
-        //     // if ($friend_id > 0) {
-        //     //     $this->session->set_flashdata("success", "Search results found");
-
-        //     // } else {
-        //     //     $this->session->set_flashdata("error", "Friend not found");
-        //     // }
-        //     $data = array("title" => $this->site_model->display_page_title(),
-        //         "content" => $this->load->view('friends/search_results', $friend_id, true),
-
-        //     );
-        //     $this->load->view("site/layouts/layout", $data);
-        // } else {
-            // start of pagination
-            $segment = 3;
-            $this->load->library("pagination");
-            $config['base_url'] = site_url().'friends/all-friends';
-            $config['total_rows'] = $this->friends_model->record_count();
-            // echo $config['total_rows']; die();
-            $config['uri_segment'] = $segment;
-            $config['per_page'] = 5;
-            $config['num_links'] = 5;
-            
-            $config['full_tag_open'] = '<div class="pagging text-center"><nav aria-label="Page navigation example"><ul class="pagination">';
-            $config['full_tag_close'] = '</ul></nav></div>';
-            $config['num_tag_open'] = '<li class="page-item"><span class="page-link">';
-            $config['num_tag_close'] = '</span></li>';
-            $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link">';
-            $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-            $config['next_tag_open'] = '<li class="page-item"><span class="page-link">';
-            $config['next_tagl_close'] = '<span aria-hidden="true">&raquo;</span></span></li>';
-            $config['prev_tag_open'] = '<li class="page-item"><span class="page-link">';
-            $config['prev_tagl_close'] = '</span></li>';
-            $config['first_tag_open'] = '<li class="page-item"><span class="page-link">';
-            $config['first_tagl_close'] = '</span></li>';
-            $config['last_tag_open'] = '<li class="page-item"><span class="page-link">';
-            $config['last_tagl_close'] = '</span></li>';
-            
-            $this->pagination->initialize($config);
-
-            $page = ($this->uri->segment($segment))?$this->uri->segment($segment) : 0;
-            $v_data["links"] = $this->pagination->create_links();
-            $all_friends = $this->friends_model->get_friends($config['per_page'],$page);
-            $v_data['page'] = $page;
-            $v_data["all_friends"] = $all_friends;
-
-            $data = array("title" => $this->site_model->display_page_title(),
-                "content" => $this->load->view("friends/all_friends", $v_data, true),
-
-            );
-            $this->load->view("site/layouts/layout", $data);
-
-            // end of pagination
-        // }
-
-        //    $friend_name =  $this->input->post('friend_name');
-        //$data['results'] = $this->friends_model->search_friend($friend_name);
-        // $this->load->view('pages/search_results',$data);
+        $this->load->view("all_cars");
     }
 
     public function welcome($friend_id)
@@ -137,48 +69,30 @@ class Friends extends MX_Controller
     }
 
 //add friend
-    public function new_friend()
+    public function add_car()
     {
 
-        $this->form_validation->set_rules("firstname", "First Name", "required");
-        $this->form_validation->set_rules("age", "Age", "required|numeric");
-        $this->form_validation->set_rules("gender", "Gender", "required");
-        $this->form_validation->set_rules("hobby", "Hobby", "required");
-        // $this->form_validation->set_rules("friend_image", "Profile Image", "required");
-
+        $this->form_validation->set_rules("carmake", "Car Make", "required");
+        $this->form_validation->set_rules("color", "Color", "required");
+        $this->form_validation->set_rules("registrationnumber", "Registration Number", "required");
+        $this->form_validation->set_rules("year", "Year", "required");
+        $this->form_validation->set_rules("cartype", "Car Type", "required");
+        $this->form_validation->set_rules("availability", "Availability", "required");
 
         if ($this->form_validation->run()) {
-            $resize = array(
-                "width"=>600,
-                "height"=>600
-
-            );
-            $upload_response = $this->file_model->upload_image($this->upload_path,"friend_image",$resize);
-            if($upload_response["check"] == FALSE){
-                $this->session->set_flashdata("error",$upload_response["message"]);
-            }
-            else{
-                if($this->friends_model->add_friend($upload_response)){
-                    $this->session->set_flashdata("success",$upload_response["message"]);
-                    redirect("friends");
-                }
-                
-            }
-            // $friend_id = $this->friends_model->add_friend($upload_response["message"]);
             
-            // redirect("friends");
         }
 
         $data["form_error"] = validation_errors();
 
-        // $this->load->view("add_friend", $data);
+        $this->load->view("add_car_details", $data);
 
-        $v_data["add_friend"] = "friends/Friends_model";
-        $data = array("title" => $this->site_model->display_page_title(),
-            "content" => $this->load->view("friends/add_friend", $v_data, true),
+        // $v_data["add_friend"] = "friends/Friends_model";
+        // $data = array("title" => $this->site_model->display_page_title(),
+        //     "content" => $this->load->view("friends/add_friend", $v_data, true),
 
-        );
-        $this->load->view("site/layouts/layout", $data);
+        // );
+        // $this->load->view("site/layouts/layout", $data);
 
     }
 
