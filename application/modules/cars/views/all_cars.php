@@ -32,9 +32,19 @@
             </tr>
             <tr>
             <?php 
-                foreach($car_details->num_rows() as $one_car){ ?>
-                    <td>$one_car-></td>
-                <?php }
+                foreach($car_details->result() as $row){ 
+                    $car_make = $row->car_make;
+                    $color = $row->color;
+                    $registration_number = $row->registration_number;
+                    $year_of_manufuctring = $row->year_of_manufuctring;
+                    $car_type = $row->car_type;
+                    $availability = $row->availability;
+                    $date_created = $row->date_created;
+                    $date_updated = $row->date_updated;
+                    ?>
+                    <td><?php echo $car_make ?></td>
+                }
+                endforeach
                 
             ?>
             </tr>
