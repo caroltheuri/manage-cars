@@ -106,6 +106,8 @@ class Cars extends MX_Controller
         $deactivate = $this->cars_model->deactivate($car_id);
         redirect("cars/index");
     }
+    
+    //Function that when run saves the right data from a given API to the database
     public function people()
     {
         $curl = curl_init();

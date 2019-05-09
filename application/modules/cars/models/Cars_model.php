@@ -2,7 +2,7 @@
 class Cars_model extends CI_Model
 {
     //Function that saves entries to the database in the car_details table.
-    function add_car()
+    public function add_car()
     {
         $data = array(
             "car_make" => $this->input->post("carmake"),
@@ -15,13 +15,8 @@ class Cars_model extends CI_Model
             "deleted" => "1"
 
         );
-        if ($this->db->insert("car_details", $data)) {
-            $this->session->set_flashdata("success", "New Car has been added");
-            return $this->db->insert_id();
-        } else {
-            $this->session->set_flashdata("error", "New Car cannot be added");
-            return false;
-        }
+        $this->db->insert("car_details", $data);
+        return $this->db->insert_id();
 
     }
 
@@ -94,6 +89,7 @@ class Cars_model extends CI_Model
         );
         $this->db->insert("people_details", $data);
     }
+    //Function that saves people with the eye color blue
     public function save_blue_people_details($name,$height,$gender){
         $data = array(
             "name" => $name,
