@@ -12,8 +12,8 @@ class Cars extends MX_Controller
     {
         $v_data["car_details"] = $this->cars_model->get_cars();
         $this->load->view("all_cars",$v_data);
-        echo json_encode($v_data);
-        echo json_decode($v_data);
+        // echo json_encode($v_data);
+        // echo json_decode($v_data);
 
 
     }
@@ -122,19 +122,14 @@ class Cars extends MX_Controller
             "Content-Type: application/json"
         ),
         ));
-
         $response = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
-        //echo $response->count;
         if ($err) {
         echo "cURL Error #:" . $err;
         } else 
         {
             $array = json_decode($response, true);
-            // echo count($array["results"]);
-            // echo $array["results"][0]["name"];
             $total_people = $array["results"];
             if(is_array($array)){
                 for($j=0;$j<count($array["results"]);$j++) {
@@ -156,5 +151,4 @@ class Cars extends MX_Controller
             }  
         }
     }
-
 }
