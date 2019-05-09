@@ -59,10 +59,10 @@
                         <td><?php echo $date_updated ?></td>
                         <td><?php echo anchor("cars/update_car/".$id, "Edit",array("class" => "btn btn-primary")); ?></td>
                         <?php if($availability == 1){?>
-                            <td><a href="" class="btn btn-warning" width="5%">De-Activate</a></td>
+                            <td><?php echo anchor("cars/cars/deactivate/".$id,"DeActivate",array("onclick" => "return confirm('Are you sure you want to deactivate?')", "class" => "btn btn-danger"));?></td>
                         <?php }
                         else{?>
-                            <td><a href="" class="btn btn-success">Activate</a></td>
+                        <td><?php echo anchor("cars/cars/activate/".$id,"Activate",array("onclick" => "return confirm('Are you sure you want to activate?')", "class" => "btn btn-success"));?></td>
                         <?php }
                         ?>
                         <td><?php echo anchor("cars/cars/delete_car/".$id,"Delete",array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger"));?></td>

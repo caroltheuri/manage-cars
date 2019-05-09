@@ -20,31 +20,17 @@
          <?php echo anchor("cars/index", "Go Home",array("class" => "btn btn-warning")); ?>
         <?php echo form_open_multipart($this->uri->uri_string()); ?>
             <div class="form-group">
-            <label for ="car_make">Car Make</label>
-            <input type="text" name="carmake" class="form-control" value="<?php echo $car_make ?>">
-            </div>
-            <div class="form-group">
                 <label for="color">Color</label>
                 <input type="text" name="color" class="form-control" value="<?php echo $color ?>"/>
             </div>
-            <div>
-                <label for="registration_number">Registration Number</label>
-                <input type="text" name="registrationnumber" class="form-control" value="<?php echo $registration_number ?>"/>
-            </div>
-            <div class="form-group">
-            <label for="year">Year of Manufuctring</label>
-            <input type="number" name="year" class="form-control" value="<?php echo $year_of_manufuctring ?>">
-            </div>
-            <div class="form-group">
-            <label for="car_type">Car Type</label>
-            <input type="text" name="cartype" class="form-control" value="<?php echo $car_type ?>">
-            </div>
             <div class="form-group mb-3">
-            <select class="custom-select form-control" name="availability" value="<?php echo $availability ?>">
-                <option selected>Choose...</option>
-                <option value="1">Available</option>
-                <option value="0">Not Available</option>
-            </select>
+            
+                <label for="availability"><?php echo $availability ?></label>
+                <select class="custom-select form-control" name="availability" value="<?php echo $availability ?>">
+                    <option selected>Choose...</option>
+                    <option value="1">Available</option>
+                    <option value="0">Not Available</option>
+                </select>
             </div>
             <div class="submit_button">
                 <input type ="submit" class="btn btn-primary" value="Update Car Details"/>

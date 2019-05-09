@@ -46,11 +46,8 @@ class Cars extends MX_Controller
     // Function for editing car details
      public function update_car($car_id)
     {
-        $this->form_validation->set_rules("carmake", "Car Make", "required");
+       
         $this->form_validation->set_rules("color", "Color", "required");
-        $this->form_validation->set_rules("registrationnumber", "Registration Number", "required");
-        $this->form_validation->set_rules("year", "Year", "required");
-        $this->form_validation->set_rules("cartype", "Car Type", "required");
         $this->form_validation->set_rules("availability", "Availability", "required");
 
         if ($this->form_validation->run()) {
@@ -94,5 +91,49 @@ class Cars extends MX_Controller
         //2. Return all cars where the value delete column is 0; meaning, they are not deleted
         redirect("cars/index");
     }
+    public function activate($car_id){
+         $activate = $this->cars_model->activate($car_id);
+         redirect("cars/index");
+    }
+    public function deactivate($car_id){
+        $deactivate = $this->cars_model->deactivate($car_id);
+        redirect("cars/index");
+    }
+    // public function people()
+    // {
+    //     $curl = curl_init();
+
+    //     curl_setopt_array($curl, array(
+    //     CURLOPT_URL => "https://swapi.co/api/people/",
+    //     CURLOPT_RETURNTRANSFER => true,
+    //     CURLOPT_ENCODING => "",
+    //     CURLOPT_MAXREDIRS => 10,
+    //     CURLOPT_TIMEOUT => 30,
+    //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //     CURLOPT_CUSTOMREQUEST => "GET",
+    //     CURLOPT_POSTFIELDS => "",
+    //     CURLOPT_HTTPHEADER => array(
+    //         "Accept: */*",
+    //         "Cache-Control: no-cache",
+    //         "Connection: keep-alive",
+    //         "Host: swapi.co",
+    //         "Postman-Token: f88bfb3d-4b74-4fe6-9c5b-5083174b2fbe,561b3653-3106-4bff-9386-5872eb70d246",
+    //         "User-Agent: PostmanRuntime/7.11.0",
+    //         "accept-encoding: gzip, deflate",
+    //         "cache-control: no-cache"
+    //     ),
+    //     ));
+
+    //     $response = curl_exec($curl);
+    //     $err = curl_error($curl);
+
+    //     curl_close($curl);
+
+    //     if ($err) {
+    //     echo "cURL Error #:" . $err;
+    //     } else {
+    //     echo $response;
+    //     }
+    // }
 
 }

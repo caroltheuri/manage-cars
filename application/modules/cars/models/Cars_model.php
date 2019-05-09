@@ -19,7 +19,7 @@ class Cars_model extends CI_Model
             $this->session->set_flashdata("success", "New Car has been added");
             return $this->db->insert_id();
         } else {
-            $this->session->set_flashdata("error", "New friend cannot be added");
+            $this->session->set_flashdata("error", "New Car cannot be added");
             return false;
         }
 
@@ -38,11 +38,8 @@ class Cars_model extends CI_Model
     public function update_car($car_id)
     {
         $data = array(
-            "car_make" => $this->input->post("carmake"),
+            
             "color" => $this->input->post("color"),
-            "registration_number" => $this->input->post("registrationnumber"),
-            "year_of_manufuctring" => $this->input->post("year"),
-            "car_type" => $this->input->post("cartype"),
             "availability" => $this->input->post("availability"),
             "date_updated" => date('Y-m-d H:i:s'),
 
@@ -63,11 +60,25 @@ class Cars_model extends CI_Model
     //Function for deleting a car entry
     public function delete_car($car_id)
     {
-        $this->db->where("car_id", $car_id);
+        $data = array(
+            "car_id"=> $car_id,
+            "availability" => 0
+        );
+        $this->db->where($data);
         $this->db->set("deleted",0);
         $this->db->update("car_details");
     }  
     
+    public function activate($car_id){
+        $this->db->where("car_id", $car_id);
+        $this->db->set("availability",1);
+        $this->db->update("car_details");
+    }
+    public function deactivate($car_id){
+        $this->db->where("car_id", $car_id);
+        $this->db->set("availability",0);
+        $this->db->update("car_details");
+    }
     //Function that returns cars whose colour is blue alone
     public function sort_by_color()
     {
