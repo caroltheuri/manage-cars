@@ -83,6 +83,28 @@ class Cars_model extends CI_Model
     public function sort_by_color()
     {
         $this->db->where("color", "Blue");
-        $this->db->get("car_details");
+        return $this->db->get("car_details");
     }  
+    //Function that saves peoples details with id of 1
+    public function save_people_details($name,$eyecolor,$birthyear){
+        $data = array(
+            "name" => $name,
+            "eye_color" => $eyecolor,
+            "birth_year" => $birthyear
+        );
+        $this->db->insert("people_details", $data);
+    }
+    public function save_blue_people_details($name,$height,$gender){
+        $data = array(
+            "name" => $name,
+            "height" => $height,
+            "gender" => $gender
+        );
+        if(($name == "n/a") || ($height == "n/a") || ($gender == "n/a")){
+            $name = "hidden";
+            $height = "hidden";
+            $gender = "hidden";
+        }
+        $this->db->insert("blue_people", $data);
+    }
 }

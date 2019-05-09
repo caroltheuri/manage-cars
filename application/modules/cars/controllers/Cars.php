@@ -12,13 +12,16 @@ class Cars extends MX_Controller
     {
         $v_data["car_details"] = $this->cars_model->get_cars();
         $this->load->view("all_cars",$v_data);
+        echo json_encode($v_data);
+        echo json_decode($v_data);
+
+
     }
 
     //Function that sorts by Blue color
     public function sortColor(){
-        $v_data= $this->cars_model->sort_by_color();
-        redirect("cars/index");
-    }
+        $v_data["car_details"]= $this->cars_model->sort_by_color();
+        $this->load->view("all_cars",$v_data);    }
 
     //Function for adding a new entry
     /**
@@ -35,8 +38,12 @@ class Cars extends MX_Controller
         $this->form_validation->set_rules("availability", "Availability", "required");
 
         if ($this->form_validation->run()) {
-            $save_details = $this->cars_model->add_car();
-            redirect("index");
+            $color = $this->input->post("color");
+            if(($color == "Blue") || ($color == "Red") || ($color == "Green") || ($color == "White") || ($color == "Yellow")){
+                $save_details = $this->cars_model->add_car();
+            }
+            //$save_details = $this->cars_model->add_car();
+            redirect("cars/index");
             //$this->load->view("all_cars", $save_details);
         }
         
@@ -99,41 +106,55 @@ class Cars extends MX_Controller
         $deactivate = $this->cars_model->deactivate($car_id);
         redirect("cars/index");
     }
-    // public function people()
-    // {
-    //     $curl = curl_init();
+    public function people()
+    {
+        $curl = curl_init();
 
-    //     curl_setopt_array($curl, array(
-    //     CURLOPT_URL => "https://swapi.co/api/people/",
-    //     CURLOPT_RETURNTRANSFER => true,
-    //     CURLOPT_ENCODING => "",
-    //     CURLOPT_MAXREDIRS => 10,
-    //     CURLOPT_TIMEOUT => 30,
-    //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //     CURLOPT_CUSTOMREQUEST => "GET",
-    //     CURLOPT_POSTFIELDS => "",
-    //     CURLOPT_HTTPHEADER => array(
-    //         "Accept: */*",
-    //         "Cache-Control: no-cache",
-    //         "Connection: keep-alive",
-    //         "Host: swapi.co",
-    //         "Postman-Token: f88bfb3d-4b74-4fe6-9c5b-5083174b2fbe,561b3653-3106-4bff-9386-5872eb70d246",
-    //         "User-Agent: PostmanRuntime/7.11.0",
-    //         "accept-encoding: gzip, deflate",
-    //         "cache-control: no-cache"
-    //     ),
-    //     ));
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://swapi.co/api/people/",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/json"
+        ),
+        ));
 
-    //     $response = curl_exec($curl);
-    //     $err = curl_error($curl);
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-    //     curl_close($curl);
+        curl_close($curl);
+        //echo $response->count;
+        if ($err) {
+        echo "cURL Error #:" . $err;
+        } else 
+        {
+            $array = json_decode($response, true);
+            // echo count($array["results"]);
+            // echo $array["results"][0]["name"];
+            $total_people = $array["results"];
+            if(is_array($array)){
+                for($j=0;$j<count($array["results"]);$j++) {
+                    $url = $array["results"][$j]["url"];
+                    $name = $array["results"][$j]["name"];
+                    $eyecolor = $array["results"][$j]["eye_color"];
+                    $birthyear = $array["results"][$j]["birth_year"];
+                    $height = $array["results"][$j]["height"];
+                    $gender = $array["results"][$j]["gender"];
 
-    //     if ($err) {
-    //     echo "cURL Error #:" . $err;
-    //     } else {
-    //     echo $response;
-    //     }
-    // }
+                    //echo $url;
+                    if (strpos($url,'1') !== false) {
+                        $save_people_details = $this->cars_model->save_people_details($name,$eyecolor,$birthyear);
+                    }
+                    if($eyecolor == "blue"){
+                        $save_blue_people_details = $this->cars_model->save_blue_people_details($name,$height,$gender);
+                    }
+                }
+            }  
+        }
+    }
 
 }
