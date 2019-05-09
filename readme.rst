@@ -1,70 +1,33 @@
 ###################
-What is CodeIgniter
+Manage Cars
 ###################
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+This is a software program  that allows a user to:
+i.Insert car details and save them to a database.
+ii.Retrieve all cars with specific attributes (Make and color).
+iii.Retrieve all cars of blue color which are available
+iv. Update cars information. Only allow a user to update the color and the availability.
+v. Delete all Unavailable cars (do a soft delete. Meaning the record will still be in the
+database but it is not available when I try to retrieve all cars).
 
-*******************
-Release Information
-*******************
+###################
+Technologies used
+###################
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+1. PHP Framework(CodeIgniter) for saving to the database
+2. SQL Database Language for purposes of manipulating and interacting with the database
+3. Azure as a deployment tool for hosting my web app
+4.HTML,CSS,Bootstrap for purposes of having a beautil UI
+5. Database for storing cars in my shop
 
-**************************
-Changelog and New Features
-**************************
+###################
+GuideLines:
+###################
+1. Navigate to this url to land to the starting page:
+2. Click on the create button to insert car details
+3.After inserting, you will be redirected to a page where you can view all cars.
+4. Sort the cars with preference to blue color that are not deleted.
+5.Click on Edit button to edit any information about the car and then you will be redirected to the homepage
+6.Delete all cars with the status not available by changing the number to 0 meaning deleted 
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
 
-*******************
-Server Requirements
-*******************
-
-PHP version 5.6 or newer is recommended.
-
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
-
-************
-Installation
-************
-
-Please see the `installation section <https://codeigniter.com/user_guide/installation/index.html>`_
-of the CodeIgniter User Guide.
-
-*******
-License
-*******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
