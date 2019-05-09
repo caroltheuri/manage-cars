@@ -25,69 +25,14 @@ class Cars_model extends CI_Model
 
     }
 
+    //This function retrieves all car entries where records are not deleted
     public function get_cars()
     {
         $this->db->from("car_details");
-        $this->db->order_by("created", "DESC");
+        $this->db->where("deleted",1);
+        $this->db->order_by("date_created", "DESC");
         return $this->db->get();
     }
-
-    public function get_all_friends($table, $where, $per_page, $page, $order, $order_method)
-    {
-        $this->db->from($table);
-        $this->db->where($where);
-        $this->db->order_by($order, $order_method);
-        return $this->db->get("",$per_page,$page);
-    }
-
-    public function get_single_friend($friend_id)
-    {
-        $this->db->where("friend_id", $friend_id);
-        return $this->db->get("friend");
-    }
-
-    //pagination function
-    public function record_count()
-    {
-        $count = $this->db->count_all_results("friend");
-        // var_dump($count);die();
-        return $count;
-    }
-    public function count_items($table, $where)
-    {
-        $this->db->where($where);
-        $count = $this->db->count_all_results($table);
-        
-        return $count;
-    }
-
-    public function fetch_friend($limit, $start)
-    {
-        $this->db->limit($limit, $start);
-        $query = $this->db->get("friend");
-
-        if ($query->num_rows() > 0) {
-            foreach ($query->result() as $row) {
-                $data[] = $row;
-            }
-
-            return $data;
-        }
-    }
-    //end of pagination
-
-    //edit button
-    //  public function edit_friend($friend_id)
-    //  {
-    //     $update = array(
-    //         "friend_name" => $this->input->post("firstname"),
-    //          "friend_age" => $this->input->post("age"),
-    //          "friend_gender" => $this->input->post("gender"),
-    //          "friend_hobby" => $this->input->post("hobby"),
-    //         );
-    //     $this->db->where('friend_id',$friend_id);
-    //     return $this->db->update('friend', $update);
-    //  }
 
     public function update_friend($friend_id)
     {
@@ -121,18 +66,8 @@ class Cars_model extends CI_Model
     //Function for deleting a car entry
     public function delete_car($car_id)
     {
-        $this->db->where("friend_id", $friend_id);
-        $this->db->set("delete",1);
-        if($this->db->update("friend"))
-        {
-           $friends_not_deleted= $this->friends_not_deleted();
-           $this->session->set_flashdata("success", "Deleted Successfully");
-            return $friends_not_deleted;
-        }
-        else {
-            $this->session->set_flashdata("error","failed to delete");
-
-            return false;
-        }
+        $this->db->where("car_id", $car_id);
+        $this->db->set("deleted",0);
+        $this->db->update("car_details");
     }   
 }

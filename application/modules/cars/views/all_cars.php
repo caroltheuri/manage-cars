@@ -16,7 +16,7 @@
     <main class ="container">
         
         <?php echo anchor("cars/add_car", "Add New Car"); ?>
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered table-sm">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Car Make</th>
@@ -27,12 +27,16 @@
                 <th scope="col">Availability</th>
                 <th scope="col">DateCreated</th>
                 <th scope="col">DateUpdated</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th colspan=3 >Actions</th>
             </tr>
-            <tr>
+            
             <?php 
+            $count = 0;
+            if ($car_details->num_rows() > 0) 
+            {
                 foreach($car_details->result() as $row){ 
+                    $count ++;
+                    $id = $row->car_id;
                     $car_make = $row->car_make;
                     $color = $row->color;
                     $registration_number = $row->registration_number;
@@ -42,14 +46,30 @@
                     $date_created = $row->date_created;
                     $date_updated = $row->date_updated;
                     ?>
-                    <td><?php echo $car_make ?></td>
+                    <tr>
+                        <td><?php echo $count ?></td>
+                        <td><?php echo $car_make ?></td>
+                        <td><?php echo $color ?></td>
+                        <td><?php echo $registration_number ?></td>
+                        <td><?php echo $year_of_manufuctring ?></td>
+                        <td><?php echo $car_type ?></td>
+                        <td><?php echo $availability ?></td>
+                        <td><?php echo $date_created ?></td>
+                        <td><?php echo $date_updated ?></td>
+                        <td><a href="" class="btn btn-primary">Edit</a></td>
+                        <?php if($availability == 1){?>
+                            <td><a href="" class="btn btn-warning" width="5%">De-Activate</a></td>
+                        <?php }
+                        else{?>
+                            <td><a href="" class="btn btn-success">Activate</a></td>
+                        <?php }
+                        ?>
+                        <td><?php echo anchor("cars/cars/delete_car/".$id,"Delete",array("onclick" => "return confirm('Are you sure you want to delete?')", "class" => "btn btn-danger"));?></td>
+                    </tr>
+                    <?php 
                 }
-                endforeach
-                
-            ?>
-            </tr>
+            }?>
         </table>
-      
     </main>
     <script src="<?php echo base_url() ?>assets/vendor/jquery/jquery-3.3.1.slim.min.js"></script>
     <script src="<?php echo base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
